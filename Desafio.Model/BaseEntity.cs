@@ -16,6 +16,7 @@ namespace Desafio.Model
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime DataCriacao { get; set; }
 
         public DateTime DataAtualizacao { get; set; }

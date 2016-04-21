@@ -16,7 +16,7 @@ namespace Desafio.API
 
             // Web API configuration and services
 
-            var corsConfig = new WebApiCorsConfiguration();
+            //var corsConfig = new WebApiCorsConfiguration();
 
             // this adds the CorsMessageHandler to the HttpConfiguration's
             // MessageHandlers collection

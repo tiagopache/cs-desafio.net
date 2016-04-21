@@ -18,5 +18,10 @@ namespace Desafio.Model
         [Required]
         [Phone]
         public string Numero { get; set; }
+
+        [ForeignKey("Usuario")]
+        public int IdUsuario { get; set; }
+
+        public virtual Usuario Usuario { get; set; }
     }
 }
