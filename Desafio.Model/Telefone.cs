@@ -12,7 +12,7 @@ namespace Desafio.Model
     public class Telefone: BaseEntity
     {
         [Required]
-        [RegularExpression("d{3}")]
+        [RegularExpression("[0-9]{3}")]
         public string Ddd { get; set; }
 
         [Required]

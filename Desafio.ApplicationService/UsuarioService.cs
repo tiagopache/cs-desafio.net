@@ -6,6 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Desafio.ServiceContract.ViewModels;
 using Desafio.Infrastructure.Security;
+using Desafio.Infrastructure.Extensions;
+using Desafio.Model;
 
 namespace Desafio.ApplicationService
 {
@@ -56,26 +58,33 @@ namespace Desafio.ApplicationService
 
         public UsuarioViewModel GetById(int usuarioId)
         {
-            return UsuarioViewModel.ToContract(this.DomainUsuarioService.GetById(usuarioId));
+            var usuario = this.DomainUsuarioService.GetById(usuarioId);
+
+            var result = this.DomainUsuarioService.FindByEmail(usuario.Email);
+
+            return this.RetrieveUsuarioWithTelefones(result);
         }
 
         public UsuarioViewModel Login(LoginViewModel login)
         {
-            var usuario = UsuarioViewModel.ToContract(this.DomainUsuarioService.FindByEmail(login.Email));
+            var usuarioModel = this.DomainUsuarioService.FindByEmail(login.Email);
+            UsuarioViewModel result = null;
 
             var exMessage = "Usuário e/ou senha inválidos.";
 
-            if (usuario != null)
+            if (usuarioModel != null)
             {
-                if (usuario.Senha.GetSHA512Hash() != login.Senha.GetSHA512Hash())
+                if (!this.DomainUsuarioService.ValidatePassword(usuarioModel, login.Senha))
                 {
                     throw new UnauthorizedAccessException(exMessage);
                 }
                 else
                 {
-                    usuario.UltimoLogin = DateTime.Now;
+                    usuarioModel.UltimoLogin = DateTime.Now;
 
-                    usuario = this.SaveUsuario(usuario);
+                    usuarioModel = this.DomainUsuarioService.SaveUsuario(usuarioModel);
+
+                    result = this.RetrieveUsuarioWithTelefones(usuarioModel);
                 }
             }
             else
@@ -83,7 +92,7 @@ namespace Desafio.ApplicationService
                 throw new UnauthorizedAccessException(exMessage);
             }
 
-            return usuario;
+            return result;
         }
 
         public void RemoveUsuario(int usuarioId)
@@ -91,19 +100,46 @@ namespace Desafio.ApplicationService
             this.DomainUsuarioService.RemoveUsuario(usuarioId);
         }
 
-        public UsuarioViewModel SaveUsuario(UsuarioViewModel usuarioToSave)
+        public UsuarioViewModel Signup(UsuarioViewModel usuarioToSave)
         {
+            if (this.DomainUsuarioService.FindByEmail(usuarioToSave.Email) != null)
+                throw new Exception("E-mail já existente.");
 
+            var usuarioSaved = this.DomainUsuarioService.SaveUsuario(UsuarioViewModel.ToEntity(usuarioToSave));
 
-            return UsuarioViewModel.ToContract(this.DomainUsuarioService.SaveUsuario(UsuarioViewModel.ToEntity(usuarioToSave)));
+            foreach (var tel in usuarioToSave.Telefones)
+            {
+                var telToSave = TelefoneViewModel.ToEntity(tel);
+                telToSave.IdUsuario = usuarioSaved.Id;
+
+                this.DomainTelefoneService.SaveTelefone(telToSave);
+            }
+            
+            usuarioSaved = this.DomainUsuarioService.CreateJwtToken(usuarioSaved);
+
+            // Must get a new context to view reflection of other dbcontext entity changes
+            usuarioSaved = new BusinessService.UsuarioService().FindByEmail(usuarioToSave.Email);
+
+            UsuarioViewModel result = RetrieveUsuarioWithTelefones(usuarioSaved);
+
+            return result;
+        }
+
+        private UsuarioViewModel RetrieveUsuarioWithTelefones(Usuario usuarioSaved)
+        {
+            var result = UsuarioViewModel.ToContract(usuarioSaved);
+
+            foreach (var tel in usuarioSaved.Telefones)
+            {
+                result.Telefones.Add(TelefoneViewModel.ToContract(tel));
+            }
+
+            return result;
         }
 
         public void ServiceInitialize()
         {
             this.DomainUsuarioService.ServiceInitialize();
         }
-
-
-
     }
 }

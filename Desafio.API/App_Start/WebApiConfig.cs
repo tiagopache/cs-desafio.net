@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Desafio.API.Filters;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
@@ -22,31 +25,19 @@ namespace Desafio.API
             // MessageHandlers collection
             //corsConfig.RegisterGlobal(config);
 
+            //config.Filters.Add(new CustomAuthorizationFilterAttribute());
 
             //corsConfig.AllowAll();
 
-            //// Web API routes
-            //config.MapHttpAttributeRoutes();
+            config.Formatters.XmlFormatter.SupportedMediaTypes.Clear();
 
-            //config.Routes.MapHttpRoute(
-            //    name: "DefaultApi",
-            //    routeTemplate: "api/{controller}/{id}/{format}",
-            //    defaults: new { id = RouteParameter.Optional, format = RouteParameter.Optional }
-            //);
+            config.Formatters.JsonFormatter.SerializerSettings.Formatting = Formatting.Indented;
 
-            //config.Formatters.XmlFormatter.SupportedMediaTypes.Clear();
+            config.Formatters.JsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
 
-            //config.Formatters.JsonFormatter.SerializerSettings.Formatting = Formatting.Indented;
-
-            //config.Formatters.JsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
-
-            //config.Formatters.JsonFormatter
-            //            .SerializerSettings
-            //            .ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
-
-
-            ////config.Formatters.JsonFormatter.SupportedMediaTypes.Add(new MediaTypeHeaderValue("text/html"));
-
+            config.Formatters.JsonFormatter
+                        .SerializerSettings
+                        .ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
 
             // Web API routes
             config.MapHttpAttributeRoutes();

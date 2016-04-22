@@ -1,4 +1,5 @@
 ﻿using Desafio.Repository;
+using Desafio.Repository.Initialize;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -42,8 +43,8 @@ namespace Desafio.BusinessService
 
         public void ServiceInitialize()
         {
-            //Database.SetInitializer(new DataSeedingInitializer());
-            //Migrator.RunMigrations();
+            Database.SetInitializer(new DataSeedingInitializer());
+            Migrator.RunMigrations();
 
             this._context.Database.Initialize(force: true);
         }

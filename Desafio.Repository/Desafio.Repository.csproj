@@ -59,6 +59,17 @@
   <ItemGroup>
     <Compile Include="DesafioDbContext.cs" />
     <Compile Include="GenericRepository.cs" />
+    <Compile Include="Initialize\DataSeedingInitializer.cs" />
+    <Compile Include="Initialize\Migrator.cs" />
+    <Compile Include="Migrations\201604220515315_Initial-Create.cs" />
+    <Compile Include="Migrations\201604220515315_Initial-Create.Designer.cs">
+      <DependentUpon>201604220515315_Initial-Create.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201604220556418_Usuario-DataCriacao-NaoComputada.cs" />
+    <Compile Include="Migrations\201604220556418_Usuario-DataCriacao-NaoComputada.Designer.cs">
+      <DependentUpon>201604220556418_Usuario-DataCriacao-NaoComputada.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UnitOfWork.cs" />
   </ItemGroup>
@@ -71,6 +82,14 @@
       <Project>{5c0dadf9-3444-46a0-92ef-158cd1693b1b}</Project>
       <Name>Desafio.Model</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201604220515315_Initial-Create.resx">
+      <DependentUpon>201604220515315_Initial-Create.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201604220556418_Usuario-DataCriacao-NaoComputada.resx">
+      <DependentUpon>201604220556418_Usuario-DataCriacao-NaoComputada.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

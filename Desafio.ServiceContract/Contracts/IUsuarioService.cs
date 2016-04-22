@@ -9,7 +9,7 @@ namespace Desafio.ServiceContract.Contracts
 {
     public interface IUsuarioService
     {
-        UsuarioViewModel SaveUsuario(UsuarioViewModel usuarioToSave);
+        UsuarioViewModel Signup(UsuarioViewModel usuarioToSave);
 
         void RemoveUsuario(int usuarioId);
 

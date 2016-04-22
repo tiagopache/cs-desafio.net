@@ -25,6 +25,23 @@ namespace Desafio.Model
 
         public string Token { get; set; }
 
-        public virtual ICollection<Telefone> Telefones { get; set; }
+
+        #region Singleton Pattern - Telefones
+        private ICollection<Telefone> _telefones;
+        public virtual ICollection<Telefone> Telefones
+        {
+            get
+            {
+                if (_telefones == null)
+                    _telefones = new List<Telefone>();
+
+                return _telefones;
+            }
+            set
+            {
+                _telefones = value;
+            }
+        }
+        #endregion
     }
 }

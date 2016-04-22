@@ -1,5 +1,4 @@
-﻿using Desafio.API.Models;
-using Desafio.ApplicationService;
+﻿using Desafio.ApplicationService;
 using Desafio.ServiceContract.Contracts;
 using Desafio.ServiceContract.ViewModels;
 using System;
@@ -37,16 +36,35 @@ namespace Desafio.API.Controllers
         [HttpPost]
         [Route("api/signup")]
         [ResponseType(typeof(UsuarioViewModel))]
-        public IHttpActionResult Signup([FromBody] UsuarioViewModel model)
+        public IHttpActionResult Signup([FromBody] SignupRequestViewModel model)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var result = this.UsuarioService.SaveUsuario(model);
+            try
+            {
+                var user = new UsuarioViewModel()
+                {
+                    Nome = model.Nome,
+                    Email = model.Email,
+                    Senha = model.Senha
+                };
 
-            return CreatedAtRoute("DefaultApi", new { id = result.Id }, result);
+                foreach (var tel in model.Telefones)
+                {
+                    user.Telefones.Add(tel);
+                }
+
+                var result = this.UsuarioService.Signup(user);
+
+                return Created<UsuarioViewModel>("Profile", result);
+            }
+            catch (Exception ex)
+            {
+                return Content<ErrorViewModel>(HttpStatusCode.BadRequest, new ErrorViewModel() { Mensagem = ex.Message, StatusCode = (int)HttpStatusCode.BadRequest });
+            }
         }
 
         [HttpPost]
@@ -56,14 +74,37 @@ namespace Desafio.API.Controllers
         {
             if (!ModelState.IsValid)
             {
-                HttpError erro = new HttpError("Dados Inválidos") { { "StatusCode", (int)HttpStatusCode.BadRequest } };
-                //return new HttpResponseException(erro);
-                //return Request.CreateErrorResponse(HttpStatusCode.BadRequest, erro);
+                return Content<ErrorViewModel>(HttpStatusCode.BadRequest, new ErrorViewModel() { Mensagem = "Dados Inválidos", StatusCode = (int)HttpStatusCode.BadRequest });
             }
 
-            var result = this.UsuarioService.Login(model);
+            try
+            {
+                var result = this.UsuarioService.Login(model);
 
-            return Ok<UsuarioViewModel>(result);
+                return Ok<UsuarioViewModel>(result);
+            }
+            catch (Exception ex)
+            {
+                return Content<ErrorViewModel>(HttpStatusCode.BadRequest, new ErrorViewModel() { Mensagem = ex.Message, StatusCode = (int)HttpStatusCode.BadRequest });
+            }
+        }
+
+        [HttpGet]
+        [Route("api/profile/{id}")]
+        [ResponseType(typeof(UsuarioViewModel))]
+        [Authorize]
+        public IHttpActionResult Profile(string id)
+        {
+            try
+            {
+                var usuario = this.UsuarioService.GetById(int.Parse(id));
+
+                return Ok<UsuarioViewModel>(usuario);
+            }
+            catch (Exception ex)
+            {
+                return Content<ErrorViewModel>(HttpStatusCode.BadRequest, new ErrorViewModel() { Mensagem = ex.Message, StatusCode = (int)HttpStatusCode.BadRequest });
+            }
         }
     }
 }

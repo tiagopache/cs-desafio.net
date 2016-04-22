@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Desafio.ApplicationService;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -20,7 +21,7 @@ namespace Desafio.API
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             //GlobalConfiguration.Configuration.MessageHandlers.Add(new TokenValidationHandler())
 
-            
+            new UsuarioService().ServiceInitialize();
         }
     }
 }

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Desafio.Infrastructure.Security;
 
 namespace Desafio.BusinessService
 {
@@ -20,27 +21,37 @@ namespace Desafio.BusinessService
 
         }
 
-        public Usuario SaveUsuario(Usuario usuarioToSave)
+        public bool ValidatePassword(Usuario usuario, string senha)
         {
-            var usuarioFound = this.UnitOfWork.UsuarioRepository.GetById(usuarioToSave.Id);
+            var exMessage = "Usuário e/ou senha inválidos.";
+
+            if (usuario == null)
+                throw new UnauthorizedAccessException(exMessage);
+
+            return Cryptography.VerifyHashedPassword(usuario.Senha, senha);
+        }
+
+        public Usuario SaveUsuario(Usuario usuarioToSave, bool generateNewToken = false)
+        {
+            var usuarioFound = this.UnitOfWork.UsuarioRepository.GetById(usuarioToSave.Id) ?? this.FindByEmail(usuarioToSave.Email);
 
             if (usuarioFound != null)
             {
                 usuarioFound.Nome = usuarioToSave.Nome;
                 usuarioFound.Email = usuarioToSave.Email;
-                usuarioFound.Senha = usuarioToSave.Senha;
-                usuarioFound.DataCriacao = usuarioToSave.DataCriacao;
                 usuarioFound.DataAtualizacao = DateTime.Now;
-                usuarioToSave.Token = usuarioToSave.Token;
+                usuarioFound.UltimoLogin = usuarioToSave.UltimoLogin;
+                if (generateNewToken)
+                    usuarioFound.Token = Cryptography.CreateJwt(usuarioFound.Id, usuarioFound.Email);
 
                 this.UnitOfWork.UsuarioRepository.Update(usuarioFound);
             }
             else
             {
                 usuarioToSave.DataCriacao = DateTime.Now;
-                usuarioToSave.DataAtualizacao = usuarioToSave.DataCriacao;
-                usuarioToSave.UltimoLogin = usuarioToSave.DataCriacao;
-                usuarioToSave.Token = "";
+                usuarioToSave.DataAtualizacao = DateTime.Now;
+                usuarioToSave.UltimoLogin = usuarioToSave.DataAtualizacao;
+                usuarioToSave.Senha = usuarioToSave.Senha.GetPasswordHash();
 
                 this.UnitOfWork.UsuarioRepository.Insert(usuarioToSave);
             }
@@ -84,6 +95,19 @@ namespace Desafio.BusinessService
         public Usuario GetById(int usuarioId)
         {
             return this.UnitOfWork.UsuarioRepository.GetById(usuarioId);
+        }
+
+        public Usuario CreateJwtToken(Usuario usuario)
+        {
+            usuario = this.GetById(usuario.Id);
+
+            usuario.Token = Cryptography.CreateJwt(usuario.Id, usuario.Email);
+
+            this.UnitOfWork.UsuarioRepository.Update(usuario);
+
+            this.UnitOfWork.Save();
+
+            return usuario;
         }
 
     }

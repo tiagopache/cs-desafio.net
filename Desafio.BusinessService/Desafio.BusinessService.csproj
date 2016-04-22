@@ -63,6 +63,10 @@
     <Compile Include="UsuarioService.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Desafio.Infrastructure\Desafio.Infrastructure.csproj">
+      <Project>{d5838eb5-54b4-43c3-b69c-9a8c35e4c52d}</Project>
+      <Name>Desafio.Infrastructure</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Desafio.Model\Desafio.Model.csproj">
       <Project>{5c0dadf9-3444-46a0-92ef-158cd1693b1b}</Project>
       <Name>Desafio.Model</Name>
