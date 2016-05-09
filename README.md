@@ -17,7 +17,7 @@ Crie um aplicativo backend que exporá uma API RESTful de criação de três end
 - Persistência com ferramenta de ORM (EntityFramework, nHibernate, etc...). - OK (EF 6)
 - .NET ^ 4.* C# ^ 5.0 - OK 
 - Todos os endpoints devem trabalhar somente com JSONs. - OK
-- Utilizar status codes de acordo com o tipo de resposta para a requisição. - Working on it
+- Utilizar status codes de acordo com o tipo de resposta para a requisição. - OK
 
 ## Requisitos desejáveis
 
@@ -76,12 +76,12 @@ Segue a documentação dos endpoints:
 
 ### Profile
 
-- Chamadas para este endpoint devem conter um header na requisição de Authentication com o valor "Bearer {token}" onde {token} é o valor do recebido através do SignUp ou Login de um usuário. - Working on it
-- Caso o token não exista, retornar erro com status apropriado com a mensagem "Não autorizado". - Working on it
+- Chamadas para este endpoint devem conter um header na requisição de Authentication com o valor "Bearer {token}" onde {token} é o valor do recebido através do SignUp ou Login de um usuário. - OK
+- Caso o token não exista, retornar erro com status apropriado com a mensagem "Não autorizado". - OK
 - Caso o token exista, buscar o usuário pelo id passado através da query string e comparar se o token do usuário encontrado é igual ao token passado no header. - OK
-	- Caso não seja o mesmo token, retornar erro com status apropriado e mensagem "Não autorizado" - Working on it
-- Caso seja o mesmo token, verificar se o último login foi a MENOS que 30 minutos atrás. - Working on it
-	- Caso não seja a MENOS que 30 minutos atrás, retornar erro com status apropriado com mensagem "Sessão inválida". - Working onti
+	- Caso não seja o mesmo token, retornar erro com status apropriado e mensagem "Não autorizado" - OK
+- Caso seja o mesmo token, verificar se o último login foi a MENOS que 30 minutos atrás. - OK
+	- Caso não seja a MENOS que 30 minutos atrás, retornar erro com status apropriado com mensagem "Sessão inválida". - OK
 - Caso tudo esteja ok, retornar os dados do usuário. - OK
 
 # 

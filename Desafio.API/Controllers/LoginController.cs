@@ -1,11 +1,14 @@
 ﻿using Desafio.ApplicationService;
+using Desafio.Infrastructure.Security;
 using Desafio.ServiceContract.Contracts;
 using Desafio.ServiceContract.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
@@ -92,19 +95,40 @@ namespace Desafio.API.Controllers
         [HttpGet]
         [Route("api/profile/{id}")]
         [ResponseType(typeof(UsuarioViewModel))]
-        [Authorize]
-        public IHttpActionResult Profile(string id)
+        public IHttpActionResult Profile(int id)
         {
             try
             {
-                var usuario = this.UsuarioService.GetById(int.Parse(id));
+                int sub = int.Parse(validateAuthorization());
 
-                return Ok<UsuarioViewModel>(usuario);
+                if (sub == id)
+                {
+                    var usuario = this.UsuarioService.GetById(sub);
+
+                    return Ok<UsuarioViewModel>(usuario);
+                }
+                else
+                    throw new UnauthorizedAccessException("Não autorizado.");
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                return Content<ErrorViewModel>(HttpStatusCode.Unauthorized, new ErrorViewModel() { Mensagem = ex.Message, StatusCode = (int)HttpStatusCode.Unauthorized });
             }
             catch (Exception ex)
             {
                 return Content<ErrorViewModel>(HttpStatusCode.BadRequest, new ErrorViewModel() { Mensagem = ex.Message, StatusCode = (int)HttpStatusCode.BadRequest });
             }
+        }
+
+        private string validateAuthorization()
+        {
+            var authorization = this.Request.Headers.Authorization.Parameter;
+
+            var claims = Cryptography.ValidateJwt(authorization);
+
+            var sub = claims.FirstOrDefault(c => c.Type == JwtRegisteredClaimNames.Sub).Value;
+
+            return sub;
         }
     }
 }

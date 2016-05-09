@@ -80,6 +80,15 @@ namespace Desafio.ApplicationService
                 }
                 else
                 {
+                    try
+                    {
+                        Cryptography.ValidateJwt(usuarioModel.Token);
+                    }
+                    catch (UnauthorizedAccessException)
+                    {
+                        usuarioModel = this.DomainUsuarioService.CreateJwtToken(usuarioModel.Id);
+                    }
+
                     usuarioModel.UltimoLogin = DateTime.Now;
 
                     usuarioModel = this.DomainUsuarioService.SaveUsuario(usuarioModel);
@@ -115,7 +124,7 @@ namespace Desafio.ApplicationService
                 this.DomainTelefoneService.SaveTelefone(telToSave);
             }
             
-            usuarioSaved = this.DomainUsuarioService.CreateJwtToken(usuarioSaved);
+            usuarioSaved = this.DomainUsuarioService.CreateJwtToken(usuarioSaved.Id);
 
             // Must get a new context to view reflection of other dbcontext entity changes
             usuarioSaved = new BusinessService.UsuarioService().FindByEmail(usuarioToSave.Email);

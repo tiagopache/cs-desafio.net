@@ -28,7 +28,7 @@ namespace Desafio.BusinessService
             if (usuario == null)
                 throw new UnauthorizedAccessException(exMessage);
 
-            return Cryptography.VerifyHashedPassword(usuario.Senha, senha);
+            return Desafio.Infrastructure.Security.Cryptography.VerifyHashedPassword(usuario.Senha, senha);
         }
 
         public Usuario SaveUsuario(Usuario usuarioToSave, bool generateNewToken = false)
@@ -97,9 +97,9 @@ namespace Desafio.BusinessService
             return this.UnitOfWork.UsuarioRepository.GetById(usuarioId);
         }
 
-        public Usuario CreateJwtToken(Usuario usuario)
+        public Usuario CreateJwtToken(int id)
         {
-            usuario = this.GetById(usuario.Id);
+            var usuario = this.GetById(id);
 
             usuario.Token = Cryptography.CreateJwt(usuario.Id, usuario.Email);
 

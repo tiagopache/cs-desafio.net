@@ -317,6 +317,10 @@
       <Project>{ff5da7e8-b549-4581-9c2d-195490f84433}</Project>
       <Name>Desafio.ApplicationService</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Desafio.Infrastructure\Desafio.Infrastructure.csproj">
+      <Project>{D5838EB5-54B4-43C3-B69C-9A8C35E4C52D}</Project>
+      <Name>Desafio.Infrastructure</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Desafio.ServiceContract\Desafio.ServiceContract.csproj">
       <Project>{710800d6-9d70-4d6e-883f-16941613dd55}</Project>
       <Name>Desafio.ServiceContract</Name>

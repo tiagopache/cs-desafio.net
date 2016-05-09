@@ -195,7 +195,7 @@ namespace Desafio.Infrastructure.Security
             }
             catch (SecurityTokenValidationException ex)
             {
-                throw new Exception("Sessão inválida.", ex);
+                throw new UnauthorizedAccessException("Sessão inválida.", ex);
             }
         }
     }
