@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Desafio.Repository
@@ -25,7 +24,7 @@ namespace Desafio.Repository
             IQueryable<TEntity> query = _dbSet;
 
             if (filter != null)
-                query.Where(filter);
+                query = query.Where(filter);
 
             foreach (var includeProperty in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
             {

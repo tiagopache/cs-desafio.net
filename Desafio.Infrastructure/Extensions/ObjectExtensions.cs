@@ -1,47 +1,54 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Desafio.Infrastructure.Extensions
 {
     public static class ObjectExtensions
     {
-        public static TTarget Copy<TTarget>(this object currentObj)
+        public static TTarget Copy<TTarget>(this object source, TTarget targetBase = default(TTarget), string excludeProperties = null)
         {
-            if (currentObj == null)
+            if (source == null)
                 return default(TTarget);
 
             var bindingFlags = BindingFlags.Public | BindingFlags.Instance;
 
-            var result = Activator.CreateInstance<TTarget>();
+            TTarget target = targetBase != null ? targetBase : Activator.CreateInstance<TTarget>();
 
-            foreach (var sProp in currentObj.GetType().GetProperties(bindingFlags))
+            string[] ignoreProperties = null;
+            if (!string.IsNullOrWhiteSpace(excludeProperties))
+                ignoreProperties = excludeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+
+            try
             {
-                var tProp = result.GetType().GetProperty(sProp.Name, bindingFlags);
-
-                if (tProp != null)
+                foreach (var propSource in source.GetType().GetProperties(bindingFlags))
                 {
-                    if (sProp.Name.Equals(tProp.Name))
-                    {
-                        var sValue = sProp.GetValue(currentObj);
+                    if (ignoreProperties != null)
+                        if (ignoreProperties.Contains(propSource.Name))
+                            continue;
 
-                        if (!sProp.PropertyType.IsComplex() && !tProp.PropertyType.IsComplex())
-                        {
-                            tProp.SetValue(result, sValue);
-                        }
+                    var propTarget = target.GetType().GetProperty(propSource.Name, bindingFlags);
+
+                    if (propTarget != null)
+                    {
+                        var sValue = propSource.GetValue(source);
+
+                        if (!propSource.PropertyType.IsComplex() && !propTarget.PropertyType.IsComplex())
+                            propTarget.SetValue(target, sValue);
                     }
                 }
             }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
 
-            return result;
+            return target;
         }
 
         public static bool IsComplex(this Type type)
         {
-            if (type.IsSubclassOf(typeof(System.ValueType)) || type.Equals(typeof(string)))
+            if (type.IsSubclassOf(typeof(ValueType)) || type.Equals(typeof(string)))
                 return false;
             else
                 return true;

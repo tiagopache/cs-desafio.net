@@ -1,10 +1,8 @@
-﻿using Desafio.Model;
+﻿using Desafio.Model.Entities;
 using System;
-using System.Collections.Generic;
 using System.Data.Entity.Validation;
 using System.Diagnostics;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Desafio.Repository

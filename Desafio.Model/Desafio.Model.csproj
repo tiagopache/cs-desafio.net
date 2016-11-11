@@ -9,8 +9,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Desafio.Model</RootNamespace>
     <AssemblyName>Desafio.Model</AssemblyName>
-    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -57,14 +58,35 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BaseEntity.cs" />
-    <Compile Include="Telefone.cs" />
-    <Compile Include="Usuario.cs" />
+    <Compile Include="Contexts\DesafioDbContext.cs" />
+    <Compile Include="Entities\Telefone.cs" />
+    <Compile Include="Entities\Usuario.cs" />
+    <Compile Include="Initialization\DataSeedingInitializer.cs" />
+    <Compile Include="Initialization\Migrator.cs" />
+    <Compile Include="Migrations\201611102243128_InitializeDatabase.cs" />
+    <Compile Include="Migrations\201611102243128_InitializeDatabase.Designer.cs">
+      <DependentUpon>201611102243128_InitializeDatabase.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\DesafioConfiguration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Desafio.Infrastructure.Data\Desafio.Infrastructure.Data.csproj">
+      <Project>{E43BE5C2-D055-4D36-9E38-80A0AC56A575}</Project>
+      <Name>Desafio.Infrastructure.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Desafio.Infrastructure\Desafio.Infrastructure.csproj">
+      <Project>{D5838EB5-54B4-43C3-B69C-9A8C35E4C52D}</Project>
+      <Name>Desafio.Infrastructure</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201611102243128_InitializeDatabase.resx">
+      <DependentUpon>201611102243128_InitializeDatabase.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

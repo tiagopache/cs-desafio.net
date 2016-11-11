@@ -1,12 +1,8 @@
-﻿using Desafio.Model;
+﻿using Desafio.Application.Contract.ViewModels.Base;
+using Desafio.Model.Entities;
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Desafio.ServiceContract.ViewModels
+namespace Desafio.Application.Contract.ViewModels
 {
     public class TelefoneViewModel : BaseViewModel<TelefoneViewModel, Telefone>
     {

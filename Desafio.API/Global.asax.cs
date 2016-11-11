@@ -1,8 +1,5 @@
-﻿using Desafio.ApplicationService;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using Desafio.Infrastructure.Data.Contexts;
+using Desafio.Infrastructure.DependencyInjection;
 using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
@@ -21,7 +18,7 @@ namespace Desafio.API
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             //GlobalConfiguration.Configuration.MessageHandlers.Add(new TokenValidationHandler())
 
-            new UsuarioService().ServiceInitialize();
+            InjectFactory.Resolve<IDbContext>().Initialize();
         }
     }
 }

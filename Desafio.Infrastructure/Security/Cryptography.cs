@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Security.Cryptography;
 using System.IdentityModel.Tokens;
-using System.Security.Claims;
+using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Security.Claims;
+using System.Security.Cryptography;
 
 namespace Desafio.Infrastructure.Security
 {
@@ -159,7 +157,7 @@ namespace Desafio.Infrastructure.Security
             var token = new JwtSecurityToken(issuer: "desafio.net", claims: claims, expires: DateTime.Now.AddMinutes(30), signingCredentials: signCredentials);
 
             var handler = new JwtSecurityTokenHandler();
-            
+
             var result = $"{handler.WriteToken(token)}";
 
             return result;

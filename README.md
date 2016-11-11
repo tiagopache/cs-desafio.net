@@ -26,8 +26,8 @@ Crie um aplicativo backend que exporá uma API RESTful de criação de três end
 - Criptogafia não reversível (hash) na senha e no token - OK
 - Todas as respostas de erro devem retornar o seguinte conteúdo:
 { 
-	"statusCode: 0, (StatusCode adequado)
-	"mensagem": "sample string" (Mensagem adequada)
+    "statusCode: 0, (StatusCode adequado)
+    "mensagem": "sample string" (Mensagem adequada)
 }
 - A resposta de erro para endpoints não localizados também deverá ser um JSON contendo seu StatusCode adequado.
 - Design Pattern desenvolvimento conhecido - Singleton, DDD, Inversion of Control, and others
@@ -40,15 +40,15 @@ Segue a documentação dos endpoints:
 
 - Este endpoint deverá receber um usuário com os seguintes campos:
 { 
-	"nome": "sample string",
-	"email": "sample string",
-	"senha": "sample string",
-	"telefones": [
-		{
-			"numero": "sample string",
-			"ddd": "sample string"
-		}
-	]
+    "nome": "sample string",
+    "email": "sample string",
+    "senha": "sample string",
+    "telefones": [
+        {
+            "numero": "sample string",
+            "ddd": "sample string"
+        }
+    ]
 }
   
 
@@ -65,8 +65,8 @@ Segue a documentação dos endpoints:
 
 - Este endpoint irá receber um objeto com os seguintes campos: 
 {
-	"email": "sample string",
-    	"senha": "sample string",
+    "email": "sample string",
+        "senha": "sample string",
 }
 
 - Caso o e-mail e a senha estejam corretas, retornar os mesmos dados do endpoint de SignUp. - OK
@@ -79,9 +79,9 @@ Segue a documentação dos endpoints:
 - Chamadas para este endpoint devem conter um header na requisição de Authentication com o valor "Bearer {token}" onde {token} é o valor do recebido através do SignUp ou Login de um usuário. - OK
 - Caso o token não exista, retornar erro com status apropriado com a mensagem "Não autorizado". - OK
 - Caso o token exista, buscar o usuário pelo id passado através da query string e comparar se o token do usuário encontrado é igual ao token passado no header. - OK
-	- Caso não seja o mesmo token, retornar erro com status apropriado e mensagem "Não autorizado" - OK
+    - Caso não seja o mesmo token, retornar erro com status apropriado e mensagem "Não autorizado" - OK
 - Caso seja o mesmo token, verificar se o último login foi a MENOS que 30 minutos atrás. - OK
-	- Caso não seja a MENOS que 30 minutos atrás, retornar erro com status apropriado com mensagem "Sessão inválida". - OK
+    - Caso não seja a MENOS que 30 minutos atrás, retornar erro com status apropriado com mensagem "Sessão inválida". - OK
 - Caso tudo esteja ok, retornar os dados do usuário. - OK
 
 # 

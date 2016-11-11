@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Project", "Project", "{6E1D69FB-B602-4A2F-B52C-B62341CAB533}"
 EndProject
@@ -15,15 +15,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "03. Domain", "03. Domain", 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "04. Infrastructure", "04. Infrastructure", "{21AD7A5B-B132-4279-9C2F-56DEE3382FAB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Desafio.Repository", "Desafio.Repository\Desafio.Repository.csproj", "{1383FD74-A077-4012-AD9C-F43059293F70}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Desafio.Model", "Desafio.Model\Desafio.Model.csproj", "{5C0DADF9-3444-46A0-92EF-158CD1693B1B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Desafio.BusinessService", "Desafio.BusinessService\Desafio.BusinessService.csproj", "{3EABC89D-6921-4322-9FC1-FF357CF8581A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Desafio.Business.Service", "Desafio.BusinessService\Desafio.Business.Service.csproj", "{3EABC89D-6921-4322-9FC1-FF357CF8581A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Desafio.ServiceContract", "Desafio.ServiceContract\Desafio.ServiceContract.csproj", "{710800D6-9D70-4D6E-883F-16941613DD55}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Desafio.Application.Contract", "Desafio.ServiceContract\Desafio.Application.Contract.csproj", "{710800D6-9D70-4D6E-883F-16941613DD55}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Desafio.ApplicationService", "Desafio.ApplicationService\Desafio.ApplicationService.csproj", "{FF5DA7E8-B549-4581-9C2D-195490F84433}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Desafio.Application.Service", "Desafio.ApplicationService\Desafio.Application.Service.csproj", "{FF5DA7E8-B549-4581-9C2D-195490F84433}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Desafio.Infrastructure", "Desafio.Infrastructure\Desafio.Infrastructure.csproj", "{D5838EB5-54B4-43C3-B69C-9A8C35E4C52D}"
 EndProject
@@ -31,16 +29,16 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Desafio.API", "Desafio.API\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Desafio.Infrastructure.Test", "Desafio.Infrastructure.Test\Desafio.Infrastructure.Test.csproj", "{D6BC8C71-96E5-4D6A-8C26-E5CE87121B96}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Desafio.Infrastructure.Data", "Desafio.Infrastructure.Data\Desafio.Infrastructure.Data.csproj", "{E43BE5C2-D055-4D36-9E38-80A0AC56A575}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Desafio.Business.Contract", "Desafio.Business.Contract\Desafio.Business.Contract.csproj", "{901406C0-04B4-4832-A09D-7A51E4D21A72}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{1383FD74-A077-4012-AD9C-F43059293F70}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1383FD74-A077-4012-AD9C-F43059293F70}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1383FD74-A077-4012-AD9C-F43059293F70}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1383FD74-A077-4012-AD9C-F43059293F70}.Release|Any CPU.Build.0 = Release|Any CPU
 		{5C0DADF9-3444-46A0-92EF-158CD1693B1B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{5C0DADF9-3444-46A0-92EF-158CD1693B1B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5C0DADF9-3444-46A0-92EF-158CD1693B1B}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -69,6 +67,14 @@ Global
 		{D6BC8C71-96E5-4D6A-8C26-E5CE87121B96}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D6BC8C71-96E5-4D6A-8C26-E5CE87121B96}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D6BC8C71-96E5-4D6A-8C26-E5CE87121B96}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E43BE5C2-D055-4D36-9E38-80A0AC56A575}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E43BE5C2-D055-4D36-9E38-80A0AC56A575}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E43BE5C2-D055-4D36-9E38-80A0AC56A575}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E43BE5C2-D055-4D36-9E38-80A0AC56A575}.Release|Any CPU.Build.0 = Release|Any CPU
+		{901406C0-04B4-4832-A09D-7A51E4D21A72}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{901406C0-04B4-4832-A09D-7A51E4D21A72}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{901406C0-04B4-4832-A09D-7A51E4D21A72}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{901406C0-04B4-4832-A09D-7A51E4D21A72}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -78,7 +84,6 @@ Global
 		{7E185C57-0628-4E8B-A6A9-3ED8F9160F5B} = {6E1D69FB-B602-4A2F-B52C-B62341CAB533}
 		{0180E8E7-904C-4E73-85DE-BFD4C5B77B31} = {6E1D69FB-B602-4A2F-B52C-B62341CAB533}
 		{21AD7A5B-B132-4279-9C2F-56DEE3382FAB} = {6E1D69FB-B602-4A2F-B52C-B62341CAB533}
-		{1383FD74-A077-4012-AD9C-F43059293F70} = {21AD7A5B-B132-4279-9C2F-56DEE3382FAB}
 		{5C0DADF9-3444-46A0-92EF-158CD1693B1B} = {0180E8E7-904C-4E73-85DE-BFD4C5B77B31}
 		{3EABC89D-6921-4322-9FC1-FF357CF8581A} = {0180E8E7-904C-4E73-85DE-BFD4C5B77B31}
 		{710800D6-9D70-4D6E-883F-16941613DD55} = {7E185C57-0628-4E8B-A6A9-3ED8F9160F5B}
@@ -86,5 +91,7 @@ Global
 		{D5838EB5-54B4-43C3-B69C-9A8C35E4C52D} = {21AD7A5B-B132-4279-9C2F-56DEE3382FAB}
 		{485A9006-941D-4FE4-AC27-D69C91AE92B9} = {9392EA7C-1CFE-4C26-9B96-76C8A9D1D590}
 		{D6BC8C71-96E5-4D6A-8C26-E5CE87121B96} = {8922642C-B6EA-4CF0-BDB6-63CDBEC59438}
+		{E43BE5C2-D055-4D36-9E38-80A0AC56A575} = {21AD7A5B-B132-4279-9C2F-56DEE3382FAB}
+		{901406C0-04B4-4832-A09D-7A51E4D21A72} = {0180E8E7-904C-4E73-85DE-BFD4C5B77B31}
 	EndGlobalSection
 EndGlobal

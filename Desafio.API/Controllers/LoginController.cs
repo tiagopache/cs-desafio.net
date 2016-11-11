@@ -1,15 +1,12 @@
-﻿using Desafio.ApplicationService;
+﻿using Desafio.Application.Contract.Contracts;
+using Desafio.Application.Contract.ViewModels;
+using Desafio.Infrastructure.Extensions;
 using Desafio.Infrastructure.Security;
-using Desafio.ServiceContract.Contracts;
-using Desafio.ServiceContract.ViewModels;
+using Microsoft.Practices.Unity;
 using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens;
 using System.Linq;
 using System.Net;
-using System.Net.Http;
-using System.Security.Claims;
-using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 
@@ -17,24 +14,15 @@ namespace Desafio.API.Controllers
 {
     public class LoginController : ApiController
     {
+        private IUsuarioApplicationService _usuarioApplicationService { get; set; }
 
-        #region Singleton Pattern - UsuarioService
-        private IUsuarioService _usuarioService;
-        public IUsuarioService UsuarioService
+        public LoginController() { }
+
+        [InjectionConstructor]
+        public LoginController(IUsuarioApplicationService usuarioApplicationService)
         {
-            get
-            {
-                if (_usuarioService == null)
-                    _usuarioService = new UsuarioService();
-
-                return _usuarioService;
-            }
-            set
-            {
-                _usuarioService = value;
-            }
+            this._usuarioApplicationService = usuarioApplicationService;
         }
-        #endregion
 
         [HttpPost]
         [Route("api/signup")]
@@ -60,13 +48,13 @@ namespace Desafio.API.Controllers
                     user.Telefones.Add(tel);
                 }
 
-                var result = this.UsuarioService.Signup(user);
+                var result = this._usuarioApplicationService.Signup(user);
 
                 return Created<UsuarioViewModel>("Profile", result);
             }
             catch (Exception ex)
             {
-                return Content<ErrorViewModel>(HttpStatusCode.BadRequest, new ErrorViewModel() { Mensagem = ex.Message, StatusCode = (int)HttpStatusCode.BadRequest });
+                return Content<ErrorViewModel>(HttpStatusCode.BadRequest, new ErrorViewModel() { Mensagem = ex.GetFullMessage(), StatusCode = (int)HttpStatusCode.BadRequest });
             }
         }
 
@@ -82,13 +70,13 @@ namespace Desafio.API.Controllers
 
             try
             {
-                var result = this.UsuarioService.Login(model);
+                var result = this._usuarioApplicationService.Login(model);
 
                 return Ok<UsuarioViewModel>(result);
             }
             catch (Exception ex)
             {
-                return Content<ErrorViewModel>(HttpStatusCode.BadRequest, new ErrorViewModel() { Mensagem = ex.Message, StatusCode = (int)HttpStatusCode.BadRequest });
+                return Content<ErrorViewModel>(HttpStatusCode.BadRequest, new ErrorViewModel() { Mensagem = ex.GetFullMessage(), StatusCode = (int)HttpStatusCode.BadRequest });
             }
         }
 
@@ -103,7 +91,7 @@ namespace Desafio.API.Controllers
 
                 if (sub == id)
                 {
-                    var usuario = this.UsuarioService.GetById(sub);
+                    var usuario = this._usuarioApplicationService.GetById(sub);
 
                     return Ok<UsuarioViewModel>(usuario);
                 }
@@ -112,11 +100,11 @@ namespace Desafio.API.Controllers
             }
             catch (UnauthorizedAccessException ex)
             {
-                return Content<ErrorViewModel>(HttpStatusCode.Unauthorized, new ErrorViewModel() { Mensagem = ex.Message, StatusCode = (int)HttpStatusCode.Unauthorized });
+                return Content<ErrorViewModel>(HttpStatusCode.Unauthorized, new ErrorViewModel() { Mensagem = ex.GetFullMessage(), StatusCode = (int)HttpStatusCode.Unauthorized });
             }
             catch (Exception ex)
             {
-                return Content<ErrorViewModel>(HttpStatusCode.BadRequest, new ErrorViewModel() { Mensagem = ex.Message, StatusCode = (int)HttpStatusCode.BadRequest });
+                return Content<ErrorViewModel>(HttpStatusCode.BadRequest, new ErrorViewModel() { Mensagem = ex.GetFullMessage(), StatusCode = (int)HttpStatusCode.BadRequest });
             }
         }
 

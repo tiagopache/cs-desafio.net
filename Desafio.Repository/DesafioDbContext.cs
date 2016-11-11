@@ -1,4 +1,5 @@
 ﻿using Desafio.Model;
+using Desafio.Model.Entities;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
