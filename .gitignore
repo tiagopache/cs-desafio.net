@@ -234,3 +234,9 @@ _Pvt_Extensions
 
 # FAKE - F# Make
 .fake/
+/Desafio.ServiceContract/Desafio.Application.Contract-JUPITER.csproj
+/Desafio.ServiceContract
+/Desafio.BusinessService/Desafio.Business.Service-JUPITER.csproj
+/Desafio.BusinessService
+/Desafio.ApplicationService/Desafio.Application.Service-JUPITER.csproj
+/Desafio.ApplicationService

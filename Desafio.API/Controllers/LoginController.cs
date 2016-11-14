@@ -1,4 +1,5 @@
-﻿using Desafio.Application.Contract.Contracts;
+﻿using Desafio.API.ErrorHandler;
+using Desafio.Application.Contract.Contracts;
 using Desafio.Application.Contract.ViewModels;
 using Desafio.Infrastructure.Extensions;
 using Desafio.Infrastructure.Security;
@@ -27,6 +28,7 @@ namespace Desafio.API.Controllers
         [HttpPost]
         [Route("api/signup")]
         [ResponseType(typeof(UsuarioViewModel))]
+        [AiHandleError]
         public IHttpActionResult Signup([FromBody] SignupRequestViewModel model)
         {
             if (!ModelState.IsValid)
@@ -61,6 +63,7 @@ namespace Desafio.API.Controllers
         [HttpPost]
         [Route("api/login")]
         [ResponseType(typeof(UsuarioViewModel))]
+        [AiHandleError]
         public IHttpActionResult Login([FromBody] LoginViewModel model)
         {
             if (!ModelState.IsValid)
@@ -83,6 +86,7 @@ namespace Desafio.API.Controllers
         [HttpGet]
         [Route("api/profile/{id}")]
         [ResponseType(typeof(UsuarioViewModel))]
+        [AiHandleError]
         public IHttpActionResult Profile(int id)
         {
             try
