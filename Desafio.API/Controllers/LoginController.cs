@@ -104,7 +104,7 @@ namespace Desafio.API.Controllers
             }
             catch (UnauthorizedAccessException ex)
             {
-                return Content<ErrorViewModel>(HttpStatusCode.Unauthorized, new ErrorViewModel() { Mensagem = ex.GetFullMessage(), StatusCode = (int)HttpStatusCode.Unauthorized });
+                return Content<ErrorViewModel>(HttpStatusCode.Unauthorized, new ErrorViewModel() { Mensagem = ex.Message, StatusCode = (int)HttpStatusCode.Unauthorized });
             }
             catch (Exception ex)
             {
