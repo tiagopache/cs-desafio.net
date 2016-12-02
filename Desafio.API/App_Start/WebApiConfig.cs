@@ -1,6 +1,8 @@
-﻿using Newtonsoft.Json;
+﻿using Desafio.Infrastructure.Logging;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using System.Web.Http;
+using System.Web.Http.ExceptionHandling;
 
 namespace Desafio.API
 {
@@ -44,7 +46,8 @@ namespace Desafio.API
                 defaults: new { id = RouteParameter.Optional }
             );
 
-            config.Filters.Add(new ErrorHandler.AiExceptionFilterAttribute());
+            //config.Filters.Add(new ErrorHandler.AiExceptionFilterAttribute());
+            config.Services.Add(typeof(IExceptionLogger), AiExceptionLogger.Factory());
         }
     }
 }
